@@ -15,13 +15,14 @@ module.exports = {
 
   // Returns all product level information for a specified product id.
   getProductInfo: async (req, res) => {
-    // const { productId } = req.params;
-    // try {
-    //   const products = await pool.query('SELECT * FROM products', [productId]);
-    //   res.json(products.rows[0]);
-    // } catch (err) {
-    //   res.status(404).send(`Error retrieving product list: ${err.message}`);
-    // }
+    const { productId } = req.params;
+    try {
+      const products = await pool.query("SELECT *, (SELECT json_agg(json_build_object('feature', feature, 'value', value)) AS features \
+                                         FROM features where product_id = $1) FROM products WHERE id = $1;", [productId]);
+      res.json(products.rows[0]);
+    } catch (err) {
+      res.status(404).send(`Error retrieving product list: ${err.message}`);
+    }
   },
 
   getStyles: async (req, res) => {
