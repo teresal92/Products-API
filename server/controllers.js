@@ -1,6 +1,5 @@
 // const axios = require('axios');
 const pool = require('../db')
-const { API_KEY } = require('../config.js');
 
 module.exports = {
   // Retrieves list of products
@@ -17,8 +16,14 @@ module.exports = {
   getProductInfo: async (req, res) => {
     const { productId } = req.params;
     try {
-      const products = await pool.query('SELECT *, (SELECT json_agg(json_build_object("feature", feature, "value", value)) AS features \
-                                         FROM features where product_id = $1) FROM products WHERE style_id = $1;', [productId]);
+      const products = await pool.query('SELECT *, \
+                                        (SELECT json_agg(json_build_object( \
+                                          "feature", feature, \
+                                          "value", value )) \
+                                        AS features \
+                                        FROM features \
+                                        WHERE product_id = $1) \
+                                        FROM products WHERE id = $1;', [productId]);
       res.json(products.rows[0]);
     } catch (err) {
       res.status(404).send(`Error retrieving product list: ${err.message}`);
@@ -28,18 +33,43 @@ module.exports = {
   getStyles: async (req, res) => {
     const { productId } = req.params;
     try {
-      const products = await pool.query("SELECT styles.productId AS style_id, styles.name, styles.original_price, styles.sale_price, styles.default_style AS default, \
-                                                json_agg(json_build_object('thumbnail_url', photos.thumbnail_url, 'url', photos.url)) AS photos \
+      const products = await pool.query("SELECT styles.productId, \
+                                          (SELECT to_json(json_agg(results)) AS results \
+                                          FROM ( \
+                                            SELECT styles.id AS style_id, styles.name, styles.original_price, styles.sale_price, styles.default_style AS \"default?\", \
+                                                  json_agg(json_build_object('thumbnail_url', photos.thumbnail_url, 'url', photos.url)) AS photos \
+                                          FROM styles INNER JOIN photos \
+                                          ON styles.id = photos.styleId \
+                                          WHERE styles.productId = $1 \
+                                          GROUP BY styles.id, styles.name, styles.original_price, styles.sale_price, styles.default_style \
+                                          ) results ) \
                                         FROM styles \
-                                        INNER JOIN photos ON styles.id = photos.styleId \
-                                        WHERE styles.productId = $1 \
-                                        GROUP BY styles.productId, styles.name, styles.original_price, styles.sale_price, styles.default_style;", [productId]);
+                                        WHERE styles.productId = $1;", [productId]);
       res.json(products.rows[0]);
     } catch (err) {
       console.error(err);
       res.status(404).send(`Error retrieving styles list: ${err.message}`);
     }
   },
+
+  // getStyles: async (req, res) => {
+  //   const { productId } = req.params;
+  //   try {
+  //     const products = await pool.query("SELECT to_json(json_agg(results)) AS results \
+  //                                         FROM ( \
+  //                                           SELECT styles.productId AS style_id, styles.name, styles.original_price, styles.sale_price, styles.default_style AS \"default?\", \
+  //                                                 json_agg(json_build_object('thumbnail_url', photos.thumbnail_url, 'url', photos.url)) AS photos \
+  //                                         FROM styles INNER JOIN photos \
+  //                                         ON styles.id = photos.styleId \
+  //                                         WHERE styles.productId = $1 \
+  //                                         GROUP BY styles.productId, styles.name, styles.original_price, styles.sale_price, styles.default_style \
+  //                                         ) results;", [productId]);
+  //     res.json(products.rows[0]);
+  //   } catch (err) {
+  //     console.error(err);
+  //     res.status(404).send(`Error retrieving styles list: ${err.message}`);
+  //   }
+  // },
 
   // select json_build_object('thumbnail_url', thumbnail_url, 'url', url) AS photos FROM photos WHERE styleid = 1;
   getRelated: (req, res) => {
