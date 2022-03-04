@@ -83,7 +83,7 @@ module.exports = {
                         LEFT OUTER JOIN skus \
                           ON styles.id = skus.styleId \
                         WHERE styles.productId = $1 \
-                        GROUP BY styles.id, styles.name, styles.original_price, styles.sale_price, styles.default_style \
+                        GROUP BY styles.id \
                       ) results) \
                   FROM styles \
                   WHERE styles.productId = $1;"
@@ -146,8 +146,4 @@ module.exports = {
     }
   }
 }
-
-// if it doesn't exist
-  // add it
-
 

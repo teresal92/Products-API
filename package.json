@@ -13,7 +13,7 @@
     "url": "git+https://github.com/Boutique-Design-API/Products-API.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Teresa Lew",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Boutique-Design-API/Products-API/issues"
@@ -27,5 +27,8 @@
     "nodemon": "^2.0.15",
     "pg": "^8.7.3",
     "postgres": "^1.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0"
   }
 }
