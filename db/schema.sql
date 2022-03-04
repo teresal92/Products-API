@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS styles (
       ON DELETE CASCADE
 );
 
+CREATE INDEX style_idx ON styles(productId);
+
 COPY styles
 FROM '/Users/teresalew/HackReactor/sdc_products_data/styles.csv'
 DELIMITER ','
@@ -46,6 +48,8 @@ CREATE TABLE IF NOT EXISTS features (
       REFERENCES products(id)
       ON DELETE CASCADE
 );
+
+CREATE INDEX product_idx ON features(product_id);
 
 COPY features
 FROM '/Users/teresalew/HackReactor/sdc_products_data/features.csv'
@@ -63,6 +67,8 @@ CREATE TABLE IF NOT EXISTS skus (
       ON DELETE CASCADE
 );
 
+CREATE INDEX sku_idx ON skus(styleId);
+
 COPY skus
 FROM '/Users/teresalew/HackReactor/sdc_products_data/skus.csv'
 DELIMITER ','
@@ -79,6 +85,8 @@ CREATE TABLE IF NOT EXISTS photos (
       ON DELETE CASCADE
 );
 
+CREATE INDEX photo_idx ON photos(styleId);
+
 COPY photos
 FROM '/Users/teresalew/HackReactor/sdc_products_data/photos.csv'
 DELIMITER ','
@@ -92,6 +100,8 @@ CREATE TABLE IF NOT EXISTS related (
     FOREIGN KEY(current_product_id) REFERENCES products(id)
     ON DELETE CASCADE
 );
+
+CREATE INDEX curr_product_idx ON related(current_product_id);
 
 COPY related
 FROM '/Users/teresalew/HackReactor/sdc_products_data/related.csv'
