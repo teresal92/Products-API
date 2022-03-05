@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon /Users/teresalew/HackReactor/Products-API/server/index.js -w server",
+    "start": "nodemon server/index.js -w server",
     "create-db": "psql postgres < db/schema.sql",
+    "lint": "eslint server/index.js",
+    "k6": "bash k6.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +31,7 @@
     "postgres": "^1.0.2"
   },
   "devDependencies": {
-    "eslint": "^8.10.0"
+    "eslint": "^8.10.0",
+    "eslint-plugin-react": "^7.29.3"
   }
 }
