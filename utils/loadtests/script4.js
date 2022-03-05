@@ -23,8 +23,8 @@ export const options = {
 export default function () {
   const BASE_URL = 'http://localhost:3000/products-api';
 
-  group('testing get /products endpoint', function() {
-    const res = http.get(`${BASE_URL}/products`);
+  group('testing get /products/:productId/related endpoint', function() {
+    const res = http.get(`${BASE_URL}/products/1/related`);
     sleep(1);
     // check(res, {
     //   'is status 200': r => r.status === 200,
