@@ -6,7 +6,7 @@ module.exports = {
   getProducts: async (req, res) => {
     const start = Date.now();
     try {
-      const text = 'SELECT * FROM products LIMIT 5;'
+      const text = `SELECT * FROM products LIMIT 5;`
       const result = await pool.query(text);
       const duration = Date.now() - start;
       console.log('executed query', {text, duration, rows: result.rowCount});
@@ -18,36 +18,13 @@ module.exports = {
   },
 
   // Returns all product level information for a specified product id.
-  // SUBQUERY
-  getProductInfo: async (req, res) => {
-    const { productId } = req.params;
-    const start = Date.now();
-    try {
-      const text = 'SELECT *, \
-                    (SELECT json_agg(json_build_object( \
-                      "feature", feature, \
-                      "value", value )) \
-                    AS features \
-                    FROM features \
-                    WHERE product_id = $1) \
-                    FROM products WHERE id = $1;'
-      const params = [productId]
-      const result = await pool.query(text, params);
 
-      const duration = Date.now() - start;
-      console.log('executed query', {text, duration, rows: result.rowCount});
-      res.json(result.rows);
-    } catch (err) {
-      res.status(404).send(`Error retrieving product list: ${err.message}`);
-    }
-  },
-
-  // JOIN
+  // Utilizing LEFT JOIN
   // getProductInfo: async (req, res) => {
   //   const { productId } = req.params;
   //   const start = Date.now();
   //   try {
-  //     const text = 'EXPLAIN ANALYZE SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, \
+  //     const text = 'SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, \
   //                     json_agg(json_build_object( \
   //                     "feature", f.feature, \
   //                     "value", f.value )) AS features \
@@ -67,25 +44,63 @@ module.exports = {
   //   }
   // },
 
+  // Utiliziing Subquery
+  getProductInfo: async (req, res) => {
+    const { productId } = req.params;
+    const start = Date.now();
+    try {
+      const text = `SELECT *,
+                    (SELECT json_agg(
+                      json_build_object(
+                      "feature", feature,
+                      "value", value)
+                    ) AS features
+                    FROM features
+                    WHERE product_id = $1)
+                    FROM products WHERE id = $1;`
+      const params = [productId]
+      const result = await pool.query(text, params);
+
+      const duration = Date.now() - start;
+      console.log('executed query', {text, duration, rows: result.rowCount});
+      res.json(result.rows);
+    } catch (err) {
+      res.status(404).send(`Error retrieving product list: ${err.message}`);
+    }
+  },
+
+  // Utilizing Postgres Transformation
   getStyles: async (req, res) => {
     const { productId } = req.params;
     const start = Date.now();
     try {
-      const text = "SELECT styles.productId  AS product_id, \
-                    (SELECT to_json(json_agg(results)) AS results \
-                      FROM (SELECT styles.id AS style_id, styles.name, styles.original_price, styles.sale_price, styles.default_style AS \"default?\", \
-                              json_agg(json_build_object('thumbnail_url', photos.thumbnail_url, 'url', photos.url)) AS photos, \
-                              json_object_agg(skus.id, json_build_object('size', skus.size, 'quantity', skus.quantity)) AS skus \
-                        FROM styles \
-                        LEFT OUTER JOIN photos \
-                          ON styles.id = photos.styleId \
-                        LEFT OUTER JOIN skus \
-                          ON styles.id = skus.styleId \
-                        WHERE styles.productId = $1 \
-                        GROUP BY styles.id \
-                      ) results) \
-                  FROM styles \
-                  WHERE styles.productId = $1;"
+      const text = `SELECT styles.productId AS product_id,
+                    (SELECT to_json(json_agg(results)) AS results
+                      FROM (SELECT
+                              styles.id AS style_id,
+                              styles.name,
+                              styles.original_price,
+                              styles.sale_price,
+                              styles.default_style AS \"default?\",
+                              json_agg(json_build_object('thumbnail_url',
+                              photos.thumbnail_url, 'url', photos.url)
+                            ) AS photos,
+                            json_object_agg(
+                              skus.id,
+                              json_build_object(
+                                'size', skus.size,
+                                'quantity', skus.quantity)
+                              ) AS skus
+                        FROM styles
+                        LEFT OUTER JOIN photos
+                          ON styles.id = photos.styleId
+                        LEFT OUTER JOIN skus
+                          ON styles.id = skus.styleId
+                        WHERE styles.productId = $1
+                        GROUP BY styles.id
+                      ) results)
+                  FROM styles
+                  WHERE styles.productId = $1;`
       const params = [productId]
       const results = await pool.query(text, params);
       const duration = Date.now() - start;
@@ -97,28 +112,32 @@ module.exports = {
     }
   },
 
-  // Postgres Transformation
+  // Testing utilizing postgres + javascript transformation.. the query took 38 ms however mapping just one row took 94 ms much longer than transforming using postgres
   // getStyles: async (req, res) => {
   //   const { productId } = req.params;
   //   const start = Date.now();
   //   try {
-  //     const text = "SELECT styles.productId  AS product_id, \
-  //                   (SELECT to_json(json_agg(results)) AS results \
-  //                     FROM (SELECT styles.id AS style_id, styles.name, styles.original_price, styles.sale_price, styles.default_style AS \"default?\", \
-  //                             json_agg(json_build_object('thumbnail_url', photos.thumbnail_url, 'url', photos.url)) AS photos, \
-  //                             json_object_agg(skus.id, json_build_object('size', skus.size, 'quantity', skus.quantity)) AS skus \
-  //                       FROM styles \
-  //                       LEFT OUTER JOIN photos \
-  //                         ON styles.id = photos.styleId \
-  //                       LEFT OUTER JOIN skus \
-  //                         ON styles.id = skus.styleId \
-  //                       WHERE styles.productId = $1 \
-  //                       GROUP BY styles.id \
-  //                     ) results) \
-  //                 FROM styles \
-  //                 WHERE styles.productId = $1;"
+  //     const text = "SELECT styles.productId  AS product_id, styles.id AS style_id, styles.name, styles.original_price, styles.sale_price, styles.default_style AS \"default?\", \
+  //                     photos.thumbnail_url, photos.url, skus.id, skus.size, skus.quantity \
+  //                   FROM styles \
+  //                   LEFT OUTER JOIN photos \
+  //                     ON styles.id = photos.styleId \
+  //                   LEFT OUTER JOIN skus \
+  //                     ON styles.id = skus.styleId \
+  //                   WHERE styles.productId = $1 \
+  //                   GROUP BY styles.id, photos.id, skus.id;"
   //     const params = [productId]
   //     const results = await pool.query(text, params);
+
+  //     const resultObj = {};
+  //     results.rows.forEach(row => {
+  //       console.log('row: ', row);
+  //       if (!resultObj.productId) {
+  //         result.Obj.productId = row.product_id;
+  //       }
+  //     });
+  //     // console.log(results.rows);
+
   //     const duration = Date.now() - start;
   //     console.log('executed query', {text, duration, rows: results.rowCount});
   //     res.json(results.rows);
@@ -128,20 +147,20 @@ module.exports = {
   //   }
   // },
 
+  // Get related products by product Id
   getRelated: async (req, res) => {
     const { productId } = req.params;
     const start = Date.now();
     try {
-      const text = 'SELECT related_product_id \
-                    FROM related \
-                    WHERE current_product_id = $1;'
+      const text = `SELECT related_product_id
+                    FROM related
+                    WHERE current_product_id = $1;`
       const params = [productId];
       const results = await pool.query(text, params);
       const duration = Date.now() - start;
       const result = results.rows.map(result => result.related_product_id);
       console.log('executed query', {text, duration, rows: results.rowCount});
       res.json(result);
-      // res.json(results.rows);
     } catch (err) {
       res.status(404).send(`Error retrieving product list: ${err.message}`);
     }
