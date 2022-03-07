@@ -4,4 +4,4 @@ node_modules
 
 sdc-dbms.pem
 
-_DS.Store
+.DS_Store

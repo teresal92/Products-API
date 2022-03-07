@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS products (
 );
 
 COPY products
-FROM '/Users/teresalew/HackReactor/sdc_products_data/product.csv'
+FROM '/home/ubuntu/sdc_products_data/product.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS styles (
 );
 
 COPY styles
-FROM '/Users/teresalew/HackReactor/sdc_products_data/styles.csv'
+FROM '/home/ubuntu/sdc_products_data/styles.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS features (
 );
 
 COPY features
-FROM '/Users/teresalew/HackReactor/sdc_products_data/features.csv'
+FROM '/home/ubuntu/sdc_products_data/features.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS skus (
 CREATE INDEX sku_idx ON skus(styleId);
 
 COPY skus
-FROM '/Users/teresalew/HackReactor/sdc_products_data/skus.csv'
+FROM '/home/ubuntu/sdc_products_data/skus.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS photos (
 );
 
 COPY photos
-FROM '/Users/teresalew/HackReactor/sdc_products_data/photos.csv'
+FROM '/home/ubuntu/sdc_products_data/photos.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS related (
 );
 
 COPY related
-FROM '/Users/teresalew/HackReactor/sdc_products_data/related.csv'
+FROM '/home/ubuntu/sdc_products_data/related.csv'
 DELIMITER ','
 CSV HEADER;
 
