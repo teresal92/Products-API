@@ -11,8 +11,8 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.get('/loaderio-bb64fe97e1129aad06aad89f82c5bb53', (req, res) => {
-  res.send('loaderio-bb64fe97e1129aad06aad89f82c5bb53');
+app.get('/loaderio-efdacdd7a84269f78bcb1e4230b54177', (req, res) => {
+  res.send('loaderio-efdacdd7a84269f78bcb1e4230b54177');
 });
 
 // routes
