@@ -2,6 +2,6 @@ config.js
 
 node_modules
 
-sdc-dbms.pem
+sdc-dbms2.pem
 
 .DS_Store
