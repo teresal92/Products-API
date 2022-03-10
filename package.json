@@ -8,7 +8,8 @@
     "create-db": "psql postgres < db/schema.sql",
     "lint": "eslint server/index.js",
     "k6": "bash k6.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "routing": "sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000"
   },
   "repository": {
     "type": "git",
