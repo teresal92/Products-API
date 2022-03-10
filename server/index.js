@@ -15,7 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/loaderio-c13cae3e6df0353a5f3f53fe3caab256', (req, res) => {
   res.send('loaderio-c13cae3e6df0353a5f3f53fe3caab256');
 });
-
 // routes
 app.use('/products-api', router);
 
