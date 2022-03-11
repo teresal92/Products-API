@@ -1,3 +1,4 @@
+
 const pool = require('../db')
 
 module.exports = {
@@ -74,32 +75,22 @@ module.exports = {
     const start = Date.now();
     try {
       const text = `SELECT styles.productId AS product_id,
-                    (SELECT to_json(json_agg(results)) AS results
-                      FROM (SELECT
-                              styles.id AS style_id,
-                              styles.name,
-                              styles.original_price,
-                              styles.sale_price,
-                              styles.default_style AS \"default?\",
-                              json_agg(json_build_object('thumbnail_url',
-                              photos.thumbnail_url, 'url', photos.url)
-                            ) AS photos,
-                            json_object_agg(
-                              skus.id,
-                              json_build_object(
-                                'size', skus.size,
-                                'quantity', skus.quantity)
-                              ) AS skus
+                            styles.id AS style_id,
+                            styles.name,
+                            styles.original_price,
+                            styles.sale_price,
+                            styles.default_style,
+                            photos.thumbnail_url,
+                            photos.url,
+                            skus.id,
+                            skus.size,
+                            skus.quantity
                         FROM styles
                         LEFT OUTER JOIN photos
                           ON styles.id = photos.styleId
                         LEFT OUTER JOIN skus
                           ON styles.id = skus.styleId
-                        WHERE styles.productId = $1
-                        GROUP BY styles.id
-                      ) results)
-                  FROM styles
-                  WHERE styles.productId = $1;`
+                        WHERE styles.productId = $1;`
       const params = [productId]
       const results = await pool.query(text, params);
       const duration = Date.now() - start;
@@ -165,4 +156,3 @@ module.exports = {
     }
   }
 }
-
