@@ -91,7 +91,7 @@ module.exports = {
                         LEFT OUTER JOIN skus
                           ON styles.id = skus.styleId
                         WHERE styles.productId = $1;`
-      const params = [productId]
+      const params = [productId];
       const results = await pool.query(text, params);
       const duration = Date.now() - start;
       // console.log('executed query', {text, duration, rows: results.rowCount});
