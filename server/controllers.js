@@ -20,52 +20,27 @@ module.exports = {
   // Returns all product level information for a specified product id.
 
   // Utilizing LEFT JOIN
-  // getProductInfo: async (req, res) => {
-  //   const { productId } = req.params;
-  //   const start = Date.now();
-  //   try {
-  //     const text = 'SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, \
-  //                     json_agg(json_build_object( \
-  //                     "feature", f.feature, \
-  //                     "value", f.value )) AS features \
-  //                   FROM products AS p \
-  //                   LEFT OUTER JOIN features AS f \
-  //                   ON p.id = f.product_id \
-  //                   WHERE p.id = $1 \
-  //                   GROUP BY p.id;'
-  //     const params = [productId]
-  //     const result = await pool.query(text, params);
-
-  //     const duration = Date.now() - start;
-  //     console.log('executed query', {text, duration, rows: result.rowCount});
-  //     res.json(result.rows);
-  //   } catch (err) {
-  //     res.status(404).send(`Error retrieving product info list: ${err.message}`);
-  //   }
-  // },
-
-  // Utiliziing Subquery
   getProductInfo: async (req, res) => {
     const { productId } = req.params;
     const start = Date.now();
     try {
-      const text = `SELECT *,
-                    (SELECT json_agg(
-                      json_build_object(
-                      "feature", feature,
-                      "value", value)
-                    ) AS features
-                    FROM features
-                    WHERE product_id = $1)
-                    FROM products WHERE id = $1;`
+      const text = 'SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, \
+                      json_agg(json_build_object( \
+                      "feature", f.feature, \
+                      "value", f.value )) AS features \
+                    FROM products AS p \
+                    LEFT OUTER JOIN features AS f \
+                    ON p.id = f.product_id \
+                    WHERE p.id = $1 \
+                    GROUP BY p.id;'
       const params = [productId]
       const result = await pool.query(text, params);
 
       const duration = Date.now() - start;
-      // console.log('executed query', {text, duration, rows: result.rowCount});
-      res.status(200).send(result.rows[0]);
+      console.log('executed query', {text, duration, rows: result.rowCount});
+      res.json(result.rows);
     } catch (err) {
-      res.status(404).send(`Error retrieving product list: ${err.message}`);
+      res.status(404).send(`Error retrieving product info list: ${err.message}`);
     }
   },
 
@@ -101,41 +76,6 @@ module.exports = {
       res.status(404).send(`Error retrieving styles list: ${err.message}`);
     }
   },
-
-  // Testing utilizing postgres + javascript transformation.. the query took 38 ms however mapping just one row took 94 ms much longer than transforming using postgres
-  // getStyles: async (req, res) => {
-  //   const { productId } = req.params;
-  //   const start = Date.now();
-  //   try {
-  //     const text = "SELECT styles.productId  AS product_id, styles.id AS style_id, styles.name, styles.original_price, styles.sale_price, styles.default_style AS \"default?\", \
-  //                     photos.thumbnail_url, photos.url, skus.id, skus.size, skus.quantity \
-  //                   FROM styles \
-  //                   LEFT OUTER JOIN photos \
-  //                     ON styles.id = photos.styleId \
-  //                   LEFT OUTER JOIN skus \
-  //                     ON styles.id = skus.styleId \
-  //                   WHERE styles.productId = $1 \
-  //                   GROUP BY styles.id, photos.id, skus.id;"
-  //     const params = [productId]
-  //     const results = await pool.query(text, params);
-
-  //     const resultObj = {};
-  //     results.rows.forEach(row => {
-  //       console.log('row: ', row);
-  //       if (!resultObj.productId) {
-  //         result.Obj.productId = row.product_id;
-  //       }
-  //     });
-  //     // console.log(results.rows);
-
-  //     const duration = Date.now() - start;
-  //     console.log('executed query', {text, duration, rows: results.rowCount});
-  //     res.json(results.rows);
-  //   } catch (err) {
-  //     console.error(err);
-  //     res.status(404).send(`Error retrieving styles list: ${err.message}`);
-  //   }
-  // },
 
   // Get related products by product Id
   getRelated: async (req, res) => {
