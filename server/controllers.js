@@ -1,4 +1,3 @@
-// const axios = require('axios');
 const pool = require('../db')
 
 module.exports = {
@@ -9,8 +8,8 @@ module.exports = {
       const text = `SELECT * FROM products LIMIT 5;`
       const result = await pool.query(text);
       const duration = Date.now() - start;
-      console.log('executed query', {text, duration, rows: result.rowCount});
-      res.json(result.rows);
+      // console.log('executed query', {text, duration, rows: result.rowCount});
+      res.status(200).send(result.rows);
 
     } catch (err) {
       res.status(404).send(`Error retrieving product list: ${err.message}`);
@@ -62,8 +61,8 @@ module.exports = {
       const result = await pool.query(text, params);
 
       const duration = Date.now() - start;
-      console.log('executed query', {text, duration, rows: result.rowCount});
-      res.json(result.rows);
+      // console.log('executed query', {text, duration, rows: result.rowCount});
+      res.status(200).send(result.rows[0]);
     } catch (err) {
       res.status(404).send(`Error retrieving product list: ${err.message}`);
     }
@@ -104,8 +103,8 @@ module.exports = {
       const params = [productId]
       const results = await pool.query(text, params);
       const duration = Date.now() - start;
-      console.log('executed query', {text, duration, rows: results.rowCount});
-      res.json(results.rows);
+      // console.log('executed query', {text, duration, rows: results.rowCount});
+      res.status(200).send(results.rows[0]);
     } catch (err) {
       console.error(err);
       res.status(404).send(`Error retrieving styles list: ${err.message}`);
@@ -159,8 +158,8 @@ module.exports = {
       const results = await pool.query(text, params);
       const duration = Date.now() - start;
       const result = results.rows.map(result => result.related_product_id);
-      console.log('executed query', {text, duration, rows: results.rowCount});
-      res.json(result);
+      //console.log('executed query', {text, duration, rows: results.rowCount});
+      res.status(200).send(result);
     } catch (err) {
       res.status(404).send(`Error retrieving product list: ${err.message}`);
     }
