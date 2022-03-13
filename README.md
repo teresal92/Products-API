@@ -8,7 +8,7 @@ Overhaul of backend infrastructure to support e-commerce storefront to handle tr
 ![image](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![image](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
 
-### Credit
+### Built By
 * [Teresa Lew](https://github.com/teresal92)
 
 
