@@ -1,8 +1,7 @@
 # Products API
-Microservice back-end with Node/Express server and PostgreSQL Database.
+Microservice back-end built with Node/Express server and PostgreSQL Database.
 
 ### List Products
-
 `GET /products`
 Retrieves the list of products.
 
