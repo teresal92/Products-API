@@ -1,5 +1,5 @@
 # Products API
-Overhaul of backend infrastructure to support e-commerce storefront to handle traffic and data at scale.
+Overhaul of backend infrastructure for e-commerce storefront to handle traffic and data at scale.
 
 ### Built With
 ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
