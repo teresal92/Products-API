@@ -1,5 +1,12 @@
 # Products API
-Backend service built with Node/Express server and PostgreSQL Database.
+Overhaul of backend infrastructure built with Node/Express server and PostgreSQL Database to support e-commerce storefront to handle traffic and data at scale.
+
+### Tech Stack
+![image]({https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white})
+![image]({https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white})
+![image]({https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white})
+![image]({https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white})
+![image]({https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white})
 
 ### List Products
 `GET /products`
