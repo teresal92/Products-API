@@ -11,6 +11,13 @@ Overhaul of backend infrastructure to support e-commerce storefront to handle tr
 ### Credit
 * [Teresa Lew](https://github.com/teresal92)
 
+
+## Table of Contents
+* [List Products](##list-products)
+* [Product Information](#product-information)
+* [Related Products](#related-products)
+* [Product Styles](#product-styles) 
+
 ### List Products
 `GET /products`
 Retrieves the list of products.
