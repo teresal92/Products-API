@@ -1,5 +1,6 @@
 # Products API
 Overhaul of backend infrastructure for e-commerce storefront to handle traffic and data at scale.
+The Products microservice is a RESTful API that serves up 
 
 ### Built With
 ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -11,8 +12,17 @@ Overhaul of backend infrastructure for e-commerce storefront to handle traffic a
 ### Built By
 * [Teresa Lew](https://github.com/teresal92)
 
+### Installation
+1. Install dependences
+```
+npm install
+```
+2. Run server on local environment
+```
+npm start
+```
 
-## Table of Contents
+## Resources
 * [List Products](##list-products)
 * [Product Information](#product-information)
 * [Related Products](#related-products)
