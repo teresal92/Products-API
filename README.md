@@ -15,8 +15,9 @@ The Products microservice is a RESTful API that serves up lists of products and 
 ### Built By
 * [Teresa Lew](https://github.com/teresal92)
 
-### Installation
-1. Install dependences
+## Installation/Setup
+1. Fork and Clone this repo.
+2. Install dependences
 ```
 npm install
 ```
@@ -24,8 +25,9 @@ npm install
 ```
 npm start
 ```
+3. Create a copy of .envCopy file and rename to .env. Within the file, update database configurations.
 
-## Resources
+## Endpoints
 * [List Products](##list-products)
 * [Product Information](#product-information)
 * [Related Products](#related-products)
@@ -42,7 +44,7 @@ Parameters
 | page      | integer | Selects the page of results to return.  Default 1.        |
 | count     | integer | Specifies how many results per page to return. Default 5. |
 
-Response
+Example Response
 
 `Status: 200 OK `
 
@@ -90,7 +92,7 @@ Parameters
 | ---------- | ------- | ------------------------------------ |
 | product_id | integer | Required ID of the Product requested |
 
-Response
+Example Response
 
 `Status: 200 OK `
 
@@ -130,7 +132,7 @@ Parameters
 | ---------- | ------- | ------------------------------------ |
 | product_id | integer | Required ID of the Product requested |
 
-Response
+Example Response
 
 `Status: 200 OK `
 
