@@ -1,6 +1,8 @@
 # Products API
-Overhaul of backend infrastructure for e-commerce storefront to handle traffic and data at scale.
-The Products microservice is a RESTful API that serves up lists of products and style, sku, photos and related products data.
+Overhaul of backend infrastructure for e-commerce storefront to handle traffic and data at scale. 
+The Products microservice is a RESTful API that serves up lists of products and style, sku, photos and related products data. 
+
+Testing/Deployment:
 * Stress tested on local build using k6
 * Deployed express server and database with AWS and stress tested with loader.io
 * Implemented horizontal scaling with NGINX as load balancer to increase throughput under load
@@ -45,8 +47,6 @@ Parameters
 | count     | integer | Specifies how many results per page to return. Default 5. |
 
 Example Response
-
-`Status: 200 OK `
 
 ```json
 [
@@ -94,8 +94,6 @@ Parameters
 
 Example Response
 
-`Status: 200 OK `
-
 ```json
 {
 	"id": 11,
@@ -133,8 +131,6 @@ Parameters
 | product_id | integer | Required ID of the Product requested |
 
 Example Response
-
-`Status: 200 OK `
 
 ```json
 {
@@ -220,9 +216,7 @@ Parameters
 | ---------- | ------- | ------------------------------------ |
 | product_id | integer | Required ID of the Product requested |
 
-Response
-
-`Status: 200 OK `
+Example Response
 
 ```json
 [
