@@ -1,6 +1,9 @@
 # Products API
 Overhaul of backend infrastructure for e-commerce storefront to handle traffic and data at scale.
 The Products microservice is a RESTful API that serves up lists of products and style, sku, photos and related products data.
+* Stress tested on local build using k6
+* Deployed express server and database with AWS and stress tested with loader.io
+* Implemented horizontal scaling with NGINX as load balancer to increase throughput under load
 
 ### Built With
 ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
