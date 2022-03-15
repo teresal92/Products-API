@@ -11,24 +11,3 @@ const pool = new Pool({
 
 module.exports = pool;
 
-// const { Pool } = require('pg');
-// const pool = new Pool({
-//   host: '184.72.6.139',
-//   user: 'postgres',
-//   password: DB_password,
-//   port: 5432,
-//   database: 'products'
-// });
-
-// module.exports = pool;
-
-// const { Pool } = require('pg');
-// const pool = new Pool({
-//   host: 'localhost', // postgres ubuntu instance
-//   user: 'teresalew',
-//   port: 5432,
-//   database: 'products'
-// });
-
-// module.exports = pool;
-
