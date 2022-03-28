@@ -1,5 +1,5 @@
 # Products API
-Overhaul of backend infrastructure for e-commerce storefront to handle traffic and data at scale. 
+Overhaul of backend infrastructure for [e-commerce storefront](https://github.com/Clapstone/project-pacific) to handle traffic and data at scale. 
 The Products microservice is a RESTful API that serves up lists of products and style, sku, photos and related products data. 
 
 Testing/Deployment:
