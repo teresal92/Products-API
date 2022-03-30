@@ -1,21 +1,17 @@
-# Products API
-Overhaul of backend infrastructure for e-commerce storefront to handle traffic and data at scale. 
-The Products microservice is a RESTful API that serves up lists of products and style, sku, photos and related products data. 
+# Products Service
+For this project, I was tasked with building out an optimized back-end for an e-commerce website that could handle high web traffic. I worked with two other teammates, each of us focusing on a different microservice. I focused on the Products service which is a RESTful API that serves up corresponding product data.
 
-Testing/Deployment:
-* Stress tested on local build using k6
-* Deployed express server and database with AWS and stress tested with loader.io
-* Implemented horizontal scaling with NGINX as load balancer to increase throughput under load
+## Achievements and Optimizations
+* Seeded PostgreSQL database with ~25 million records.
+* Optimized query times by 97% by implementing indexing.
+* Increased system capacity from 1,000 RPS to 3,000 RPS while maintaining 0.2% error rate and latency <70ms through implementing horizontal scaling with NGINX load balancer and 3 AWS EC2 server instances.
 
-### Built With
+## Technologies Used
 ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![image](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![image](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
 ![image](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![image](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
-
-### Built By
-* [Teresa Lew](https://github.com/teresal92)
 
 ## Installation/Setup
 1. Fork and Clone this repo.
@@ -30,7 +26,7 @@ npm start
 3. Create a copy of .envCopy file and rename to .env. Within the file, update database configurations.
 
 ## Endpoints
-* [List Products](##list-products)
+* [List Products](#list-products)
 * [Product Information](#product-information)
 * [Related Products](#related-products)
 * [Product Styles](#product-styles) 
@@ -78,8 +74,6 @@ Example Response
 ]
 ```
 
-
-
 ### Product Information
 
 Returns all product level information for a specified product id.
@@ -115,8 +109,6 @@ Example Response
 	],
 }
 ```
-
-
 
 ### Product Styles
 
@@ -202,8 +194,6 @@ Example Response
 }
 ```
 
-
-
 ### Related Products
 
 Returns the id's of products related to the product specified.
@@ -227,4 +217,6 @@ Example Response
 ],
 ```
 
+## Contribution
+[Teresa Lew](https://github.com/teresal92)
 
