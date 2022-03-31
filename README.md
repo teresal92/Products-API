@@ -1,14 +1,13 @@
-# Products API
-Overhaul of backend infrastructure for [e-commerce storefront](https://github.com/Clapstone/project-pacific) to handle traffic and data at scale. 
-The Products microservice is a RESTful API that serves up lists of products and style, sku, photos and related products data. 
+# Products Service
+For this project, I was tasked with building out an optimized back-end for an e-commerce website that could handle high web traffic. I worked with two other teammates, each of us focusing on a different microservice. I focused on the Products service which is a RESTful API that serves up corresponding product data.
 
-Testing/Deployment:
-* Stress tested on local build using k6
-* Deployed express server and database with AWS and stress tested with loader.io
-* Implemented horizontal scaling with NGINX as load balancer to increase throughput under load
+## Achievements and Optimizations
+* Seeded PostgreSQL database with ~25 million records.
+* Optimized query times by 97% by implementing indexing.
+* Increased system capacity from 1,000 RPS to 3,000 RPS while maintaining 0.2% error rate and latency <70ms through implementing horizontal scaling with NGINX load balancer and 3 AWS EC2 server instances.
 
-### Technologies Used
-PostgreSQL, Express.js/Node.js, NGINX, AWS EC2, Ubuntu, k6, loader.io
+## Technologies Used
+PostgreSQL, Express.js/Node.js, NGINX, AWS EC2, Ubuntu, k6, loader.io \
 ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![image](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![image](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
