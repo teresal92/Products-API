@@ -7,15 +7,13 @@ Testing/Deployment:
 * Deployed express server and database with AWS and stress tested with loader.io
 * Implemented horizontal scaling with NGINX as load balancer to increase throughput under load
 
-### Built With
+### Technologies Used
+PostgreSQL, Express.js/Node.js, NGINX, AWS EC2, Ubuntu, k6, loader.io
 ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![image](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![image](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
 ![image](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![image](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
-
-### Built By
-* [Teresa Lew](https://github.com/teresal92)
 
 ## Installation/Setup
 1. Fork and Clone this repo.
@@ -227,4 +225,6 @@ Example Response
 ],
 ```
 
+## Contribution
+* [Teresa Lew](https://github.com/teresal92)
 
