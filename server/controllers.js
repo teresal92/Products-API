@@ -1,4 +1,4 @@
-const pool = require('../db')
+const pool = require('../db');
 
 module.exports = {
   // Retrieves list of products
@@ -33,6 +33,7 @@ module.exports = {
     }
   },
 
+  // Retrieves list of styles associated with given product id
   getStyles: async (req, res) => {
     const { productId } = req.params;
     try {
