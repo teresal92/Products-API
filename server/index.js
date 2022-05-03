@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
-const router = require('./routes.js');
+const router = require('./routes');
 
 const app = express();
 const port = 3000;
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/loaderio-c13cae3e6df0353a5f3f53fe3caab256', (req, res) => {
   res.send('loaderio-c13cae3e6df0353a5f3f53fe3caab256');
 });
-// routes
+
 app.use('/products-api', router);
 
 app.listen(port, () => {
