@@ -1,5 +1,5 @@
 # Products Service
-For this project, I was tasked with building out an optimized back-end for an e-commerce website that could handle high web traffic. I worked with two other teammates, each of us focusing on a different microservice. I focused on the Products service which is a RESTful API that serves up corresponding product data.
+For this project, I was tasked with building out an optimized back-end for an [e-commerce website](https://github.com/teresal92/project-pacific) that could handle high web traffic. I worked with two other teammates, each of us focusing on a different microservice. I focused on the Products service which is a RESTful API that serves up corresponding product data.
 
 ## Achievements and Optimizations
 * Seeded PostgreSQL database with ~25 million records.
